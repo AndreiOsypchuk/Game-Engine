@@ -1,0 +1,5 @@
+*.swp
+**/bin/
+bin-int/
+.vscode/
+**/Makefile

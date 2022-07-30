@@ -1,0 +1,9 @@
+[submodule "GameEngine/deps/GLFW"]
+	path = GameEngine/deps/GLFW
+	url = https://github.com/glfw/glfw
+[submodule "GameEngine/deps/glm"]
+	path = GameEngine/deps/glm
+	url = https://github.com/g-truc/glm
+[submodule "GameEngine/deps/spdlog"]
+	path = GameEngine/deps/spdlog
+	url = https://github.com/gabime/spdlog
