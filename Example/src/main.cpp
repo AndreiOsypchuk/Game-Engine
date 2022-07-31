@@ -16,15 +16,15 @@ class TestLayer : public GE::Layer
 
             m_Shader = std::make_shared<GE::Shader>("shader.glsl");
 
-            GE::VertexSpec vs(
+            GE::VertexSpec TriangleVertexSpec(
+            {&vertices, sizeof(vertices)},
             {
                 {GE::VertexDataType::Float3, "a_Position"}, 
                 {GE::VertexDataType::Float3, "a_Colors"}
             });
 
-            GE::VertexBufferObject vbo(&vertices, sizeof(vertices));
 
-            vs.GenAttrib();
+            TriangleVertexSpec.GenAttrib();
 
         }
 

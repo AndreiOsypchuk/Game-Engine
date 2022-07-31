@@ -16,9 +16,13 @@ namespace GE
     class VertexBufferObject
     {
         public:
-            VertexBufferObject(void* data, int size);
-        public:
+            VertexBufferObject(void* data, int size)
+                : m_Data(data), m_Size(size) {};
             uint32_t m_ID;
+            void* m_Data;
+            int m_Size;
+        public:
+            void Bind();
     };
 
     struct Vertex
@@ -39,12 +43,13 @@ namespace GE
     class VertexSpec
     {
         public:
-            VertexSpec(std::initializer_list<Vertex> l);
+            VertexSpec(VertexBufferObject vbo, std::initializer_list<Vertex> l);
             void Bind();
             void Unbind();
             void GenAttrib();
         public:
             uint32_t m_ID;
+            VertexBufferObject m_VBO;
             std::vector<Vertex> m_VertexSpecList;
             unsigned int m_Stride;
     };

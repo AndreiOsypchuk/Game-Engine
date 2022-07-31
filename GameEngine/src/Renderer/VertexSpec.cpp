@@ -34,21 +34,23 @@ namespace GE
         return 0;
     }
 
-    VertexBufferObject::VertexBufferObject(void* data, int size)
+
+    void VertexBufferObject::Bind()
     {
         glGenBuffers(1, &m_ID);
         glBindBuffer(GL_ARRAY_BUFFER, m_ID);
-        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, m_Size, m_Data, GL_STATIC_DRAW);
     }
 
-        
     
 
-    VertexSpec::VertexSpec(std::initializer_list<Vertex> l)
-        : m_VertexSpecList(l), m_Stride(0)
+    VertexSpec::VertexSpec(VertexBufferObject vbo, std::initializer_list<Vertex> l)
+        : m_VertexSpecList(l), m_Stride(0), m_VBO(vbo)
     {
         glGenVertexArrays(1, &m_ID);
         glBindVertexArray(m_ID);
+
+        m_VBO.Bind();
 
         for(auto vertex : m_VertexSpecList)
             m_Stride += vertex.m_Size;
