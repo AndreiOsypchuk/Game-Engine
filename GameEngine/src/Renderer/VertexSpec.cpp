@@ -33,28 +33,37 @@ namespace GE
 
         return 0;
     }
+
+    VertexBufferObject::VertexBufferObject(void* data, int size)
+    {
+        glGenBuffers(1, &m_ID);
+        glBindBuffer(GL_ARRAY_BUFFER, m_ID);
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    }
+
         
     
 
     VertexSpec::VertexSpec(std::initializer_list<Vertex> l)
-        : m_VertexSpecList(l), m_Size(0)
+        : m_VertexSpecList(l), m_Stride(0)
     {
         glGenVertexArrays(1, &m_ID);
         glBindVertexArray(m_ID);
+
         for(auto vertex : m_VertexSpecList)
-            m_Size += vertex.m_Size;
+            m_Stride += vertex.m_Size;
     };
 
 
     void VertexSpec::GenAttrib()
     {
         int i = 0;
-        unsigned int stride = 0;
+        unsigned int offset_pointer = 0;
         for(auto vertex : m_VertexSpecList)
         {
-            glVertexAttribPointer(i, vertex.m_Length, GL_FLOAT, GL_FALSE, m_Size, (const void*)(stride * sizeof(float)));
+            glVertexAttribPointer(i, vertex.m_Length, GL_FLOAT, GL_FALSE, m_Stride, (const void*)(intptr_t)offset_pointer);
             glEnableVertexAttribArray(i);
-            stride += vertex.m_Length;
+            offset_pointer += vertex.m_Size;
             i++;
         }
     }

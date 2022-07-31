@@ -16,25 +16,15 @@ class TestLayer : public GE::Layer
 
             m_Shader = std::make_shared<GE::Shader>("shader.glsl");
 
+            GE::VertexSpec vs(
+            {
+                {GE::VertexDataType::Float3, "a_Position"}, 
+                {GE::VertexDataType::Float3, "a_Colors"}
+            });
 
-
-           // glGenVertexArrays(1, &m_VAO);
-           // glBindVertexArray(m_VAO);
-
-            GE::VertexSpec vs({
-                    {GE::VertexDataType::Float3, "a_Position"}, 
-                    {GE::VertexDataType::Float3, "a_Colors"}
-                    });
-            glGenBuffers(1, &m_VBO);
-            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+            GE::VertexBufferObject vbo(&vertices, sizeof(vertices));
 
             vs.GenAttrib();
-
-            //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)0);
-            //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
-            //glEnableVertexAttribArray(0);
-            //glEnableVertexAttribArray(1);
 
         }
 

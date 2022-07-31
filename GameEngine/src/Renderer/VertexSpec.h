@@ -13,12 +13,12 @@ namespace GE
     uint32_t VertexDataLength(VertexDataType type);
     uint32_t VertexDataSize(VertexDataType type);
 
-    struct VertexBufferObject
+    class VertexBufferObject
     {
-        VertexArrayBuffer(void* data)
-            : m_Data(data) {};
-        void* m_Data;
-        uint32_t m_ID;
+        public:
+            VertexBufferObject(void* data, int size);
+        public:
+            uint32_t m_ID;
     };
 
     struct Vertex
@@ -39,13 +39,13 @@ namespace GE
     class VertexSpec
     {
         public:
-            VertexSpec(VertexBufferObject vbo, std::initializer_list<Vertex> l);
+            VertexSpec(std::initializer_list<Vertex> l);
             void Bind();
             void Unbind();
             void GenAttrib();
         public:
             uint32_t m_ID;
             std::vector<Vertex> m_VertexSpecList;
-            unsigned int m_Size;
+            unsigned int m_Stride;
     };
 }
