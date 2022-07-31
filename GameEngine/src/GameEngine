@@ -7,3 +7,4 @@
 #include "Core/Event.h"
 #include "Core/Layer.h"
 #include "Renderer/Shader.h"
+#include "Renderer/VertexSpec.h"

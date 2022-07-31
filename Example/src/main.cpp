@@ -9,22 +9,32 @@ class TestLayer : public GE::Layer
         TestLayer()
         {
             float vertices[] = {
-                0.0f, 0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f
+                0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
+                0.5f, -0.5f, 0.0f,0.0f, 1.0f, 0.0f,
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
             };
 
             m_Shader = std::make_shared<GE::Shader>("shader.glsl");
 
-            glGenVertexArrays(1, &m_VAO);
-            glBindVertexArray(m_VAO);
 
+
+           // glGenVertexArrays(1, &m_VAO);
+           // glBindVertexArray(m_VAO);
+
+            GE::VertexSpec vs({
+                    {GE::VertexDataType::Float3, "a_Position"}, 
+                    {GE::VertexDataType::Float3, "a_Colors"}
+                    });
             glGenBuffers(1, &m_VBO);
             glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
-            glEnableVertexAttribArray(0);
+            vs.GenAttrib();
+
+            //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)0);
+            //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
+            //glEnableVertexAttribArray(0);
+            //glEnableVertexAttribArray(1);
 
         }
 
