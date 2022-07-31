@@ -23,9 +23,6 @@ class TestLayer : public GE::Layer
                 {GE::VertexDataType::Float3, "a_Colors"}
             });
 
-
-            TriangleVertexSpec.GenAttrib();
-
         }
 
         void OnEvent(GE::Event& e) override
@@ -40,8 +37,6 @@ class TestLayer : public GE::Layer
 
     public:
 
-        uint32_t m_VAO;
-        uint32_t m_VBO;
         std::shared_ptr<GE::Shader> m_Shader;
 
 };

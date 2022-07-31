@@ -54,6 +54,7 @@ namespace GE
 
         for(auto vertex : m_VertexSpecList)
             m_Stride += vertex.m_Size;
+        GenAttrib();
     };
 
 
@@ -68,6 +69,16 @@ namespace GE
             offset_pointer += vertex.m_Size;
             i++;
         }
+    }
+
+    void VertexSpec::Bind()
+    {
+        glBindVertexArray(m_ID);
+    }
+
+    void VertexSpec::Unbind()
+    {
+        glBindVertexArray(0);
     }
 
            
