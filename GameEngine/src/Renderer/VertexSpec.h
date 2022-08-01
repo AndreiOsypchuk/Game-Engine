@@ -43,13 +43,15 @@ namespace GE
     class VertexSpec
     {
         public:
-            VertexSpec(VertexBufferObject vbo, std::initializer_list<Vertex> l);
+            VertexSpec(std::initializer_list<Vertex> l);
             void Bind();
             void Unbind();
-            void GenAttrib();
+            void GenAttributes();
+            void AttachVertexBuffer(std::shared_ptr<VertexBufferObject> vbo);
+            void AttachIndexBuffer() {};
         public:
             uint32_t m_ID;
-            VertexBufferObject m_VBO;
+            std::shared_ptr<VertexBufferObject> m_VBO;
             std::vector<Vertex> m_VertexSpecList;
             unsigned int m_Stride;
     };

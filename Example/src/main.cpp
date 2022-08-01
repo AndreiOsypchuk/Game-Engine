@@ -16,12 +16,21 @@ class TestLayer : public GE::Layer
 
             m_Shader = std::make_shared<GE::Shader>("shader.glsl");
 
+            m_VBO = std::make_shared<GE::VertexBufferObject>(&vertices, sizeof(vertices));
+
+
+
             GE::VertexSpec TriangleVertexSpec(
-            {&vertices, sizeof(vertices)},
             {
                 {GE::VertexDataType::Float3, "a_Position"}, 
                 {GE::VertexDataType::Float3, "a_Colors"}
             });
+
+            TriangleVertexSpec.AttachVertexBuffer(m_VBO);
+            TriangleVertexSpec.GenAttributes();
+
+            // Then vertex spec is passed to the renderer and renderer is making
+            // a draw call
 
         }
 
@@ -38,6 +47,7 @@ class TestLayer : public GE::Layer
     public:
 
         std::shared_ptr<GE::Shader> m_Shader;
+        std::shared_ptr<GE::VertexBufferObject> m_VBO;
 
 };
 

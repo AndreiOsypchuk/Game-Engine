@@ -44,24 +44,27 @@ namespace GE
 
     
 
-    VertexSpec::VertexSpec(VertexBufferObject vbo, std::initializer_list<Vertex> l)
-        : m_VertexSpecList(l), m_Stride(0), m_VBO(vbo)
+    VertexSpec::VertexSpec(std::initializer_list<Vertex> l)
+        : m_VertexSpecList(l), m_Stride(0), m_VBO(nullptr)
     {
-        glGenVertexArrays(1, &m_ID);
-        glBindVertexArray(m_ID);
-
-        m_VBO.Bind();
 
         for(auto vertex : m_VertexSpecList)
             m_Stride += vertex.m_Size;
-        GenAttrib();
+        
+        GenAttributes();
+
     };
 
 
-    void VertexSpec::GenAttrib()
+    void VertexSpec::GenAttributes()
     {
+
+        glGenVertexArrays(1, &m_ID);
+        glBindVertexArray(m_ID);
+
         int i = 0;
         unsigned int offset_pointer = 0;
+
         for(auto vertex : m_VertexSpecList)
         {
             glVertexAttribPointer(i, vertex.m_Length, GL_FLOAT, GL_FALSE, m_Stride, (const void*)(intptr_t)offset_pointer);
@@ -69,6 +72,12 @@ namespace GE
             offset_pointer += vertex.m_Size;
             i++;
         }
+    }
+
+    void VertexSpec::AttachVertexBuffer(std::shared_ptr<VertexBufferObject> vbo)
+    {
+        m_VBO = vbo;
+        m_VBO->Bind();
     }
 
     void VertexSpec::Bind()
