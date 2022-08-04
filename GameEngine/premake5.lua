@@ -12,20 +12,14 @@ project "GameEngine"
 
         files {
             "%{prj.location}/src/**.cpp",
-            "%{prj.location}/src/**.h"
+            "%{prj.location}/src/**.h",
         }
 
         defines {
             "GLFW_INCLUDE_NONE"
         }
 
-        includedirs {
-            "%{depdirs.GameEngine}",
-            "%{depdirs.GLFW}",
-            "%{depdirs.glad}",
-            "%{depdirs.glm}",
-            "%{depdirs.spdlog}",
-        }
+        includedirs (depdirs)
 
         links {
             'X11',

@@ -8,29 +8,33 @@ class TestLayer : public GE::Layer
 
         TestLayer()
         {
+
             float vertices[] = {
-                0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
-                0.5f, -0.5f, 0.0f,0.0f, 1.0f, 0.0f,
-                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+                -0.5f, 0.5f, 0.0f,
+                0.5f, 0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+            };
+
+            unsigned int indices[] = {
+                0, 1, 2, 2, 3, 0
             };
 
             m_Shader = std::make_shared<GE::Shader>("shader.glsl");
 
             m_VBO = std::make_shared<GE::VertexBufferObject>(&vertices, sizeof(vertices));
+            m_VIO = std::make_shared<GE::VertexIndexObject>(&indices, sizeof(indices));
 
 
 
             GE::VertexSpec TriangleVertexSpec(
             {
                 {GE::VertexDataType::Float3, "a_Position"}, 
-                {GE::VertexDataType::Float3, "a_Colors"}
             });
 
             TriangleVertexSpec.AttachVertexBuffer(m_VBO);
+            TriangleVertexSpec.AttachIndexBuffer(m_VIO);
             TriangleVertexSpec.GenAttributes();
-
-            // Then vertex spec is passed to the renderer and renderer is making
-            // a draw call
 
         }
 
@@ -40,14 +44,20 @@ class TestLayer : public GE::Layer
 
         void OnUpdate(float time) override
         {
+
+            // Renderer::Scene(m_Camera, light);
+            // Renderer::Draw(GE_CUBE, m_Shader, glm::vec3 position);
+
             m_Shader->Use();
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            //glDrawArrays(GL_TRIANGLES, 0, 6);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
 
     public:
 
         std::shared_ptr<GE::Shader> m_Shader;
         std::shared_ptr<GE::VertexBufferObject> m_VBO;
+        std::shared_ptr<GE::VertexIndexObject> m_VIO;
 
 };
 

@@ -42,25 +42,30 @@ namespace GE
         glBufferData(GL_ARRAY_BUFFER, m_Size, m_Data, GL_STATIC_DRAW);
     }
 
+    void VertexIndexObject::Bind()
+    {
+        glGenBuffers(1, &m_ID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Size, m_Data, GL_STATIC_DRAW);
+    }
+
     
 
     VertexSpec::VertexSpec(std::initializer_list<Vertex> l)
         : m_VertexSpecList(l), m_Stride(0), m_VBO(nullptr)
     {
 
+        glGenVertexArrays(1, &m_ID);
+        glBindVertexArray(m_ID);
         for(auto vertex : m_VertexSpecList)
             m_Stride += vertex.m_Size;
         
-        GenAttributes();
-
     };
 
 
     void VertexSpec::GenAttributes()
     {
 
-        glGenVertexArrays(1, &m_ID);
-        glBindVertexArray(m_ID);
 
         int i = 0;
         unsigned int offset_pointer = 0;
@@ -78,6 +83,12 @@ namespace GE
     {
         m_VBO = vbo;
         m_VBO->Bind();
+    }
+
+    void VertexSpec::AttachIndexBuffer(std::shared_ptr<VertexIndexObject> vio)
+    {
+        m_VIO = vio;
+        m_VIO->Bind();
     }
 
     void VertexSpec::Bind()

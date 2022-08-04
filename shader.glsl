@@ -17,6 +17,6 @@ in vec3 f_Col;
 out vec4 f_Color;
 void main()
 {
-    //f_Color = vec4(0.3f, 0.5f, 0.6f, 1.0f);
-    f_Color = vec4(f_Col, 1.0f);
+    f_Color = vec4(0.3f, 0.5f, 0.6f, 1.0f);
+    //f_Color = vec4(f_Col, 1.0f);
 }

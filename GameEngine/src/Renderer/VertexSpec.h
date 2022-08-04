@@ -25,6 +25,18 @@ namespace GE
             void Bind();
     };
 
+    class VertexIndexObject
+    {
+        public:
+            VertexIndexObject(void* data, int size)
+                : m_Data(data), m_Size(size) {};
+            uint32_t m_ID;
+            void* m_Data;
+            int m_Size;
+        public:
+            void Bind();
+    };
+
     struct Vertex
     {
 
@@ -48,10 +60,11 @@ namespace GE
             void Unbind();
             void GenAttributes();
             void AttachVertexBuffer(std::shared_ptr<VertexBufferObject> vbo);
-            void AttachIndexBuffer() {};
+            void AttachIndexBuffer(std::shared_ptr<VertexIndexObject> vio);
         public:
             uint32_t m_ID;
             std::shared_ptr<VertexBufferObject> m_VBO;
+            std::shared_ptr<VertexIndexObject> m_VIO;
             std::vector<Vertex> m_VertexSpecList;
             unsigned int m_Stride;
     };

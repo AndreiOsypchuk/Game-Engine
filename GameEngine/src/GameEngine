@@ -8,3 +8,4 @@
 #include "Core/Layer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexSpec.h"
+#include "Renderer/stb_image.h"
